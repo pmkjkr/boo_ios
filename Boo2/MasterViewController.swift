@@ -9,20 +9,27 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import DropDown
 import Toaster
 
-class MasterViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDelegate, UITableViewDataSource {
+class MasterViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    @IBOutlet var topPickerView: UIPickerView!
+    @IBOutlet var dayDropdownButton: UIButton!
+    let dayDropdown = DropDown()
+    @IBOutlet var firstTimeDropdownButton: UIButton!
+    let firstTimeDropdown = DropDown()
+    @IBOutlet var secondTimeDropdownButton: UIButton!
+    let secondTimeDropdown = DropDown()
+    
     @IBOutlet var selectButton: UIButton!
     
     let dayList = ["월", "화", "수", "목", "금"]
     let fromTimeList = ["3(09:00~09:30)", "4(09:30~10:00)", "5(10:00~10:30)", "6(10:30~11:00)", "7(11:00~11:30)", "8(11:30~12:00)", "9(12:00~12:30)", "10(12:30~13:00)", "11(13:00~13:30)", "12(13:30~14:00)", "13(14:00~14:30)", "14(14:30~15:00)", "15(15:00~15:30)", "16(15:30~16:00)", "17(16:00~16:30)", "18(16:30~17:00)", "19(17:00~17:30)", "20(17:30~18:00)"]
-    var toTimeList = ["3(09:00~09:30)", "4(09:30~10:00)", "5(10:00~10:30)", "6(10:30~11:00)", "7(11:00~11:30)", "8(11:30~12:00)", "9(12:00~12:30)", "10(12:30~13:00)", "11(13:00~13:30)", "12(13:30~14:00)", "13(14:00~14:30)", "14(14:30~15:00)", "15(15:00~15:30)", "16(15:30~16:00)", "17(16:00~16:30)", "18(16:30~17:00)", "19(17:00~17:30)", "20(17:30~18:00)"]
+    var toTimeList:[String] = []
     
-    var selectedDay = "월"
-    var selectedFromTime = "3(09:00~09:30)"
-    var selectedToTime = "3(09:00~09:30)"
+    var selectedDay = ""
+//    var selectedFromTime = "3(09:00~09:30)"
+//    var selectedToTime = "3(09:00~09:30)"
     
     var numberOfList:JSON = [:]
     
@@ -31,19 +38,60 @@ class MasterViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     //switch
     @IBAction func switchAction(_ sender: AnyObject) {
         if sender.isOn == true{
-            topPickerView.isHidden = false
+            dayDropdownButton.isHidden = false
+            firstTimeDropdownButton.isHidden = false
+            secondTimeDropdownButton.isHidden = false
             selectButton.isHidden = false
         }else{
-            topPickerView.isHidden = true
+            dayDropdownButton.isHidden = true
+            firstTimeDropdownButton.isHidden = true
+            secondTimeDropdownButton.isHidden = true
             selectButton.isHidden = true
         }
-        
     }
+    
+    
+    @IBAction func dayDropdownButtonAction(_ sender: AnyObject) {
+                dayDropdown.anchorView = dayDropdownButton
+                dayDropdown.dataSource = dayList
+                dayDropdown.selectionAction = {[unowned self](index, item) in
+                    self.dayDropdownButton.setTitle(item, for: UIControlState.normal)
+                }
+                dayDropdown.show()
+                print(dayDropdownButton.currentTitle!)
+    }
+    
+    @IBAction func firstTimeDropdownButtonAction(_ sender: AnyObject) {
+        firstTimeDropdown.anchorView = firstTimeDropdownButton
+        firstTimeDropdown.dataSource = fromTimeList
+        firstTimeDropdown.selectionAction = {[unowned self](index, item) in
+            self.firstTimeDropdownButton.setTitle(item, for: UIControlState.normal)
+            self.toTimeList = []
+            for i in index..<self.fromTimeList.count{
+                self.toTimeList.append(self.fromTimeList[i])
+            }
+            self.secondTimeDropdownButton.setTitle(self.toTimeList[0], for: UIControlState.normal)
+            print(self.toTimeList)
+        }
+        firstTimeDropdown.show()
+    }
+    
+    
+    @IBAction func secondTimeDropdownButtonAction(_ sender: AnyObject) {
+        secondTimeDropdown.anchorView = secondTimeDropdownButton
+        secondTimeDropdown.dataSource = toTimeList
+        secondTimeDropdown.selectionAction = {[unowned self](index, item) in
+            self.secondTimeDropdownButton.setTitle(item, for: UIControlState.normal)
+        }
+        secondTimeDropdown.show()
+    }
+    
     
     func toastText(_ text:String){
         let toast = Toast(text: text, duration:Delay.short)
         toast.show()
     }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,19 +100,26 @@ class MasterViewController: UIViewController, UIPickerViewDelegate, UIPickerView
 
     //select button
     @IBAction func showEmptyRoom(_ sender: AnyObject) {
-        if selectedDay == "월"{
+        let dayString = dayDropdownButton.currentTitle
+        if dayString == "월"{
             selectedDay = "1"
-        }else if selectedDay == "화"{
+        }else if dayString == "화"{
             selectedDay = "2"
-        }else if selectedDay == "수"{
+        }else if dayString == "수"{
             selectedDay = "3"
-        }else if selectedDay == "목"{
+        }else if dayString == "목"{
             selectedDay = "4"
-        }else if selectedDay == "금"{
+        }else if dayString == "금"{
             selectedDay = "5"
         }
-        print("day:\(selectedDay), from:\(selectedFromTime), to:\(selectedToTime)")
-        getJSON(selectDay: selectedDay, toTime: selectedToTime, fromTime: selectedFromTime)
+        print("day:\(selectedDay), from:\(substringFirstCharacter(firstTimeDropdownButton.currentTitle!)), to:\(substringFirstCharacter(secondTimeDropdownButton.currentTitle!))")
+        getJSON(selectDay: selectedDay, toTime: substringFirstCharacter(secondTimeDropdownButton.currentTitle!), fromTime: substringFirstCharacter(firstTimeDropdownButton.currentTitle!))
+    }
+    
+    func substringFirstCharacter(_ string:String)->String{
+        //let index = string.index((string.startIndex), offsetBy: 1)
+        //return string.substring(to: index)
+        return string.components(separatedBy: "(")[0]
     }
     
     override func didReceiveMemoryWarning() {
@@ -72,50 +127,7 @@ class MasterViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         // Dispose of any resources that can be recreated.
     }
     
-    //PickerView DataSource
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 3
-    }
     
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if component == 0{
-            return dayList.count
-        }else if component == 1{
-            return fromTimeList.count
-        }else{
-            return toTimeList.count
-        }
-    }
-    
-    //PickerView Delegate
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        if component == 0{
-            return dayList[row]
-        }else if component == 1{
-            return fromTimeList[row]
-        }else{
-            return toTimeList[row]
-        }
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if component == 0{
-            selectedDay = dayList[row]
-        }else if component == 1 {
-            toTimeList = []
-            for i in row..<fromTimeList.count{
-                toTimeList.append(fromTimeList[i])
-            }
-            selectedFromTime = fromTimeList[row]
-            pickerView.selectRow(0, inComponent: 2, animated: true)
-            selectedToTime = toTimeList[0]
-        }else if component == 2{
-            selectedToTime = toTimeList[row]
-        }
-        pickerView.reloadAllComponents()
-    }
-
-
     // MARK: - Table view data source
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return numberOfList.count

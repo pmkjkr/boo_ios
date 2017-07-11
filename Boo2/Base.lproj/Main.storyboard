@@ -28,18 +28,10 @@
                                     <action selector="switchAction:" destination="dQc-8e-R23" eventType="valueChanged" id="iym-MO-67R"/>
                                 </connections>
                             </switch>
-                            <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7zv-CI-SQK">
-                                <rect key="frame" x="0.0" y="109" width="375" height="150"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="dQc-8e-R23" id="zfy-V3-rzF"/>
-                                    <outlet property="delegate" destination="dQc-8e-R23" id="sQU-kn-NBP"/>
-                                </connections>
-                            </pickerView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s3j-XM-9oa">
-                                <rect key="frame" x="164" y="267" width="46" height="30"/>
+                                <rect key="frame" x="109" y="267" width="153" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
+                                <state key="normal" title="getEmptyRoom"/>
                                 <connections>
                                     <action selector="showEmptyRoom:" destination="dQc-8e-R23" eventType="touchUpInside" id="5F4-nM-1h7"/>
                                 </connections>
@@ -53,7 +45,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="X6u-OJ-pfQ" id="tbo-iI-arn">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="arI-Hq-iPP">
@@ -78,9 +70,33 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nBP-nb-0bA">
                                 <rect key="frame" x="140" y="72" width="46" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
+                                <state key="normal" title="Next"/>
                                 <connections>
                                     <segue destination="qNa-Ti-qWu" kind="show" id="SWw-NA-2MD"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TrU-YF-C4H">
+                                <rect key="frame" x="16" y="152" width="112" height="61"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="dayDropdownButtonAction:" destination="dQc-8e-R23" eventType="touchUpInside" id="3yk-x8-AtL"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Kv-dT-5yT">
+                                <rect key="frame" x="131" y="151" width="112" height="61"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="firstTimeDropdownButtonAction:" destination="dQc-8e-R23" eventType="touchUpInside" id="g7A-T0-YoL"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ylr-ae-DVZ">
+                                <rect key="frame" x="263" y="151" width="112" height="61"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="secondTimeDropdownButtonAction:" destination="dQc-8e-R23" eventType="touchUpInside" id="wmh-7U-tbL"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -90,14 +106,16 @@
                         <nil key="title"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="dayDropdownButton" destination="TrU-YF-C4H" id="AgF-5Q-vNa"/>
+                        <outlet property="firstTimeDropdownButton" destination="3Kv-dT-5yT" id="d0X-Qn-2jg"/>
+                        <outlet property="secondTimeDropdownButton" destination="Ylr-ae-DVZ" id="OEX-ID-qhl"/>
                         <outlet property="selectButton" destination="s3j-XM-9oa" id="Mog-Iz-dTe"/>
                         <outlet property="tableview" destination="apj-IR-HqX" id="9tj-zi-0Xx"/>
-                        <outlet property="topPickerView" destination="7zv-CI-SQK" id="Esa-Al-Jdu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hsZ-nj-Q6R" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1050" y="224"/>
+            <point key="canvasLocation" x="1048.8" y="223.53823088455775"/>
         </scene>
         <!--Spe Grade View Controller-->
         <scene sceneID="HMm-SZ-9y1">
@@ -144,7 +162,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uUi-m1-Wdz" id="Dkw-LE-xAs">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mfv-c7-uHl">

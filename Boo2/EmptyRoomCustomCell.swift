@@ -10,6 +10,8 @@ import UIKit
 
 class EmptyRoomCustomCell: UITableViewCell {
 
+    @IBOutlet var emptyRoomLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

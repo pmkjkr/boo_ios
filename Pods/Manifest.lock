@@ -1,0 +1,21 @@
+PODS:
+  - Alamofire (4.5.0)
+  - DropDown (2)
+  - SwiftyJSON (3.1.4)
+  - Toaster (2.0.4)
+
+DEPENDENCIES:
+  - Alamofire (~> 4.4)
+  - DropDown (~> 2)
+  - SwiftyJSON
+  - Toaster
+
+SPEC CHECKSUMS:
+  Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
+  DropDown: 744784d9c9aa505100e942c16acd05430cbb2f0a
+  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
+  Toaster: f13031c636ef065281bc11857be9a16c7659e04f
+
+PODFILE CHECKSUM: b6eca0d4d5f473d1ac34f2c370efbb54ade672d1
+
+COCOAPODS: 1.2.1

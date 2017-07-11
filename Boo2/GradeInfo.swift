@@ -7,3 +7,11 @@
 //
 
 import Foundation
+
+struct GradeInfo {
+    var year = String()
+    var term = String()
+    var lecName = String()
+    var grade = String()
+    
+}

@@ -10,6 +10,10 @@ import UIKit
 
 class SpeGradeCustomCell: UITableViewCell {
 
+    
+    @IBOutlet var lectureName: UILabel!
+    @IBOutlet var lectureGrade: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
